@@ -1,0 +1,41 @@
+
+/* down-arrow image icon */
+.down__arrow {
+    height: 10px !important;
+    width: 10px !important;
+    opacity: 0.5;
+    margin-left: 20px;
+    padding: 5px;
+    border-radius: 100%;
+}
+
+.down__arrow:hover {
+    background-color: lightgray;
+    transition: 0.7s;
+}
+
+.dropbtn {
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid lightgray;
+    border-radius: .25rem;
+    color: #373a3c;
+    font-size: 16px;
+    margin: 7px;
+    min-width: 160px;
+    outline: none;
+    opacity: 0;
+    pointer-events: none;
+    cursor: pointer;
+    text-align: left;
+    transition: opacity 250ms ease !important;
+}
+
+.menuItem {
+    padding: 5px;
+    border-radius: .25rem;
+}
+
+.menuItem:hover {
+    background-color: lightgray;
+}

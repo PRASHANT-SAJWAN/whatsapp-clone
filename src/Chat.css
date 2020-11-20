@@ -1,0 +1,117 @@
+.chat {
+    flex: 0.7;
+    background-color: #ebebeb;
+    display: flex;
+    flex-direction: column;
+}
+
+.no__chat {
+    flex: 0.7;
+    opacity: 0.8;
+    display: flex;
+    flex-direction: column;
+    background-image: url('https://cdn.wallpapersafari.com/91/28/bpwxA4.jpg');
+    align-items: center;
+}
+
+/* chat header */
+.chat__header {
+    display: flex;
+    padding: 20px;
+    align-items: center;
+    border-bottom: 2px solid #f6f6f6;
+}
+
+.chat__header__info {
+    padding-left: 20px;
+    flex: 1;
+}
+
+.chat__header__info > h3 {
+    font-size: 16px;
+    margin-bottom: 3px;
+    font-weight: 500;
+}
+
+.chat__header__info > p {
+    color: gray;
+}
+
+.chat__header__right {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 100px;
+}
+
+/* chat */
+.chat__body {
+    flex: 1;
+    background-repeat: repeat;
+    background-position: center;
+    padding: 30px;
+    overflow: scroll;
+}
+
+.chat__message {
+    display: flex;
+    position: relative;
+    font-size: 16px;
+    padding: 10px 20px;
+    margin: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    width: fit-content;
+}
+
+.chat__reciever {
+    margin-left: auto;
+    background-color: #dcf8c6;
+}
+
+.chat__name {
+    position: absolute;
+    top: -15px;
+    font-size: xx-small;
+}
+
+.chat__timestamp {
+    margin-left: 10px;
+    font-size: xx-small;
+}
+
+/* chat footer */
+.chat__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 62px;
+    border-top: 2px solid lightgray;
+}
+
+.chat__footer > form {
+    display: flex;
+    flex: 1;
+}
+
+.chat__footer > form > input {
+    display: flex;
+    flex: 1;
+    border-radius: 30px;
+    outline-style: none;
+    border: none;
+    padding: 10px;
+}
+
+.chat__footer > form > button {
+    display: none;
+}
+
+
+.chat__message:hover > img {
+    /* position: absolute; */
+    background-color: lightgray;
+    opacity: 1;
+    transition: 0.7s;
+}
+
