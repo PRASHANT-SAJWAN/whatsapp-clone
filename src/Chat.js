@@ -1,4 +1,8 @@
-import { Avatar } from '@material-ui/core';
+import { Avatar, IconButton } from '@material-ui/core';
+import SearchSharpIcon from '@material-ui/icons/SearchSharp';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
+import MicIcon from '@material-ui/icons/Mic';
 import React, { useEffect, useState } from 'react';
 import './Chat.css';
 import { useParams } from 'react-router-dom';
@@ -14,6 +18,7 @@ function Chat() {
     const { roomId } = useParams();
     const [roomName, setRoomName] = useState("");
     const [messages, setMessages] = useState([]);
+    // eslint-disable-next-line
     const [{ user }, dispatch] = useStateValue();
 
     useEffect(() => {
@@ -60,7 +65,7 @@ function Chat() {
         const timestamp = firebase.firestore.FieldValue.serverTimestamp();
         // write in db
         alert(`message ${input} added to db`);
-        // console.log(timestamp);
+        
         db.collection('rooms').doc(roomId).collection('messages').add({
             message: input,
             name: user.displayName,
@@ -84,32 +89,36 @@ function Chat() {
                 </p>
                 </div>
                 <div className="chat__header__right">
-                    {/* <IconButton> <SearchIcon /> </IconButton>
-                    <IconButton> <MoreVertIcon /> </IconButton> */}
+                    <IconButton> <SearchSharpIcon /> </IconButton>
+                    <IconButton> <MoreVertIcon /> </IconButton>
                 </div>
             </div>
             
-            
             <div className="chat__body">
                 {messages.map(function (message) {
-                    return (<p className={`chat__message ${message.name === user.displayName && "chat__reciever"}`}>
-                        <span className="chat__name"> {message.name} </span>
-                        {message.message}
-                        <span className="chat__timestamp">
-                            {new Date(message.timestamp?.toDate()).toUTCString()}
-                        </span>
-                        <DropDown msg={message} user={user.displayName} message_ID={message.message_ID} roomId={roomId}/>
-                    </p>)
+                    return (
+                        <p className={`chat__message ${message.name === user.displayName && "chat__reciever"}`}>
+                            <span className="chat__name"> {message.name} </span>
+                            {message.message}
+                            <span className="chat__timestamp">
+                                {new Date(message.timestamp?.toDate()).toUTCString()}
+                            </span>
+                            <DropDown msg={message} user={user.displayName} message_ID={message.message_ID} roomId={roomId}/>
+                        </p>)
                 })}
             </div>
             
             <div className="chat__footer">
-                {/* <InsertEmoticon /> */}
+                <IconButton>
+                    <InsertEmoticonIcon />
+                </IconButton>
                 <form>
                     <input value={input} onChange={(e) => setInput(e.target.value)} type="text" placeholder="Type a message" />
                     <button onClick={sendMessage} type="submit">Send</button>
                 </form>
-                {/* <InsertEmoticon /> */}
+                <IconButton>
+                    <MicIcon />
+                </IconButton>
             </div>
         </div>)
         : (<div className="no__chat"></div>)

@@ -46,7 +46,7 @@
 
 /* chat */
 .chat__body {
-    flex: 1;
+    flex: 1;    
     background-repeat: repeat;
     background-position: center;
     padding: 30px;

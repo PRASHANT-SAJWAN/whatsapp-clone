@@ -40,6 +40,7 @@ function SidebarChat({id, name, addNewChat}) {
                     <h2>{name}</h2>
                     <p>{messages[0]?.message}</p>
                 </div>
+                <div className="delete__icon"></div>
             </div>
         </Link>
     ) : (
