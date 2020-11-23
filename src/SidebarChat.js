@@ -1,12 +1,12 @@
 import { Avatar } from '@material-ui/core';
 import React, {useEffect, useState} from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import db from './firebase';
 import './SidebarChat.css';
+import DeleteGroup from './DeleteGroup';
 
 function SidebarChat({id, name, addNewChat}) {
     const [seed, setSeed] = useState("");
-    const { roomId } = useParams();
     const [messages, setMessages] = useState("");
     
     // generate random avatar every time screen is refreshed 
@@ -40,12 +40,14 @@ function SidebarChat({id, name, addNewChat}) {
                     <h2>{name}</h2>
                     <p>{messages[0]?.message}</p>
                 </div>
-                <div className="delete__icon"></div>
+                <div className="delete__icon">
+                    <DeleteGroup roomId={id}/>
+                </div>
             </div>
         </Link>
     ) : (
         <div onClick={createChat} className="sidebarChat">
-            <h2>Add New Chat</h2>
+            <h2>Add New Public Group</h2>
         </div>
     );
 }

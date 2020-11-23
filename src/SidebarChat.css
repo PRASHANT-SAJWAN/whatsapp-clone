@@ -17,4 +17,9 @@
 
 .sidebarChat__info {
     margin-left: 15px;
+    flex: 1;
+}
+
+.delete__icon {
+    /* flex: 1; */
 }

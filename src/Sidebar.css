@@ -62,5 +62,5 @@ a {
 
 .sidebar__chats {
     flex: 1;
-    overflow: scroll;
+    overflow-y: scroll;
 }
