@@ -69,7 +69,7 @@ function Chat() {
 
         db.collection('rooms').doc(roomId).collection('messages').add({
             message: input,
-            name: user.displayName,
+            name: user.email,
             timestamp: timestamp,
             message_ID: hash_code(timestamp),
         });

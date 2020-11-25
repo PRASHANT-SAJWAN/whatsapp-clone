@@ -1,12 +1,23 @@
 import { Button } from '@material-ui/core';
 import React from 'react';
-import { auth, provider } from './firebase';
+import db, { auth, provider } from './firebase';
 import './Login.css';
 import { actionTypes } from './reducer';
 import { useStateValue } from './StateProvider';
 
 function Login() {
     const [{}, dispatch] = useStateValue();
+
+    // fix later adding user even if it exists
+    const add = (email, name) => {
+        db.collection(email).get().then((doc) => {
+            if (!doc.exists) {
+                db.collection(email).add({
+                    name: name,
+                });
+            }
+        });
+    }
 
     const signIn = () => {
         auth.signInWithPopup(provider)
@@ -15,8 +26,10 @@ function Login() {
                 type: actionTypes.SET_USER,
                 user: result.user,
             });
+            add(result.user.email, result.user.displayName);
         })
         .catch((error)=> alert(error.message));
+
     };
     return (
         <div className="login">

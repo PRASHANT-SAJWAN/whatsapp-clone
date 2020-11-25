@@ -11,6 +11,7 @@ import { useStateValue } from './StateProvider';
 
 function Sidebar() {
     const [rooms, setRooms] = useState([]);
+    // const [friends, setFriends] = useState([]);
     const [{ user }, dispatch] = useStateValue();
 
     useEffect(() => {
