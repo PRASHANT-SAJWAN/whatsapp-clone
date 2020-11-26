@@ -22,13 +22,15 @@ function Chat() {
     const [{ user }, dispatch] = useStateValue();
 
     useEffect(() => {
-        setSeed(Math.floor(Math.random() * 5000));
-    }, []);
+        if (roomId) {
+            db.collection('rooms').doc(roomId).get().then(snapshot=> {
+                setSeed (snapshot.data().seed);
+            });
+        }
+    }, [roomId]);
 
     useEffect(() => {
         if (roomId) {
-            // console.log(roomId);
-
             var roomRef = db.collection('rooms').doc(roomId);
 
             roomRef.get().then(doc => {
@@ -43,33 +45,31 @@ function Chat() {
                         setMessages(snapshot.docs.map(doc => doc.data()))
                     });
                 }
-            })
-                .catch(err => {
+            }).catch(err => {
                     console.log('Error getting document', err);
                 });
         }
     }, [roomId]);
 
-    /// todo: generate a better hash using timestamp 
     const hash_code = (timestamp) => {
-        const str = user.displayName + input + timestamp;
+        const random = Math.floor(Math.random() * 500000);
+        const str = user.displayName + input + timestamp + random;
         var hash = 0, i = 0, len = str.length;
         while (i < len) {
             hash = ((hash << 5) - hash + str.charCodeAt(i++)) << 0;
         }
-        return hash;
+        return hash + random;
     }
 
     const sendMessage = (e) => {
-        console.log(user);
         e.preventDefault();
         const timestamp = firebase.firestore.FieldValue.serverTimestamp();
-        // write in db
-        alert(`message ${input} added to db`);
 
+        // write in db
         db.collection('rooms').doc(roomId).collection('messages').add({
             message: input,
-            name: user.email,
+            name: user.displayName,
+            email: user.email,
             timestamp: timestamp,
             message_ID: hash_code(timestamp),
         });
@@ -84,10 +84,11 @@ function Chat() {
                     <Avatar src={'https://avatars.dicebear.com/api/human/' + seed + '.svg'} />
                     <div className="chat__header__info">
                         <h3>{roomName ? roomName : '404 Room Not Found'}</h3>
-                        <p>last seen{" "} {
-                            new Date(
-                                messages[messages.length - 1]?.timestamp?.toDate()).toUTCString()}
-                        </p>
+                        {messages.length === 0 ? "" :
+                            (<p>last message at{" "} {
+                                new Date(
+                                    messages[messages.length - 1]?.timestamp?.toDate()).toUTCString()}
+                            </p>)}
                     </div>
                     <div className="chat__header__right">
                         <IconButton> <SearchSharpIcon /> </IconButton>
@@ -98,7 +99,7 @@ function Chat() {
                 <div className="chat__body">
                     {messages.map(function (message) {
                         return (
-                            <p className={`chat__message ${message.name === user.displayName && "chat__reciever"}`}>
+                            <p className={`chat__message ${message.email === user.email && "chat__reciever"}`}>
                                 <span className="chat__name"> {message.name} </span>
                                 {message.message}
                                 <span className="chat__timestamp">
