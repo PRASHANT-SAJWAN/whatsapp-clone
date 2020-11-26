@@ -6,12 +6,12 @@ import { actionTypes } from './reducer';
 import { useStateValue } from './StateProvider';
 
 function Login() {
-    const [{}, dispatch] = useStateValue();
+    const [{ }, dispatch] = useStateValue();
 
     // fix later adding user even if it exists
     const add = (email, name) => {
         db.collection(email).get().then((doc) => {
-            if (!doc.exists) {
+            if (!(doc.name === name)) {
                 db.collection(email).add({
                     name: name,
                 });
@@ -21,20 +21,20 @@ function Login() {
 
     const signIn = () => {
         auth.signInWithPopup(provider)
-        .then(result=> {
-            dispatch({
-                type: actionTypes.SET_USER,
-                user: result.user,
-            });
-            add(result.user.email, result.user.displayName);
-        })
-        .catch((error)=> alert(error.message));
+            .then(result => {
+                dispatch({
+                    type: actionTypes.SET_USER,
+                    user: result.user,
+                });
+                // add(result.user.email, result.user.displayName);
+            })
+            .catch((error) => alert(error.message));
 
     };
     return (
         <div className="login">
             <div className="login__container">
-                <img alt="" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/1200px-WhatsApp.svg.png"/>
+                <img alt="" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/1200px-WhatsApp.svg.png" />
                 <div className="login__text">
                     <h1>Sign in</h1>
                 </div>
