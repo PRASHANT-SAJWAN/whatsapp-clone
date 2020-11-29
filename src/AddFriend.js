@@ -1,3 +1,4 @@
+import React from 'react'
 import { Avatar, IconButton } from '@material-ui/core';
 import SearchSharpIcon from '@material-ui/icons/SearchSharp';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -11,7 +12,7 @@ import { useStateValue } from './StateProvider';
 import firebase from 'firebase';
 import DropDown from './DropDown';
 
-function Chat() {
+function AddFriend() {
     const [input, setInput] = useState("");
     const [seed, setSeed] = useState("");
     const { roomId } = useParams();
@@ -22,6 +23,7 @@ function Chat() {
 
     useEffect(() => {
         if (roomId) {
+            // set seed by user's google email avatar
             db.collection('rooms').doc(roomId).get().then(snapshot => {
                 setSeed(snapshot.data().seed);
             });
@@ -30,17 +32,17 @@ function Chat() {
 
     useEffect(() => {
         if (roomId) {
-            var roomRef = db.collection('rooms').doc(roomId);
+            var roomRef = db.collection(user.email).doc(roomId);
 
             roomRef.get().then(doc => {
                 if (!doc.exists) {
                     alert('No such ROOM!');
                 } else {
-                    db.collection('rooms').doc(roomId).onSnapshot((snapshot) => {
+                    db.collection(user.email).doc(roomId).onSnapshot((snapshot) => {
                         setRoomName(snapshot.data().name);
                     });
 
-                    db.collection('rooms').doc(roomId).collection('messages').orderBy('timestamp', 'asc').onSnapshot(snapshot => {
+                    db.collection(user.email).doc(roomId).collection('messages').orderBy('timestamp', 'asc').onSnapshot(snapshot => {
                         setMessages(snapshot.docs.map(doc => doc.data()))
                     });
                 }
@@ -82,7 +84,7 @@ function Chat() {
                 <div className="chat__header">
                     <Avatar src={'https://avatars.dicebear.com/api/human/' + seed + '.svg'} />
                     <div className="chat__header__info">
-                        <h3>{roomName ? roomName : '404 Room Not Found'}</h3>
+                        <h3>{roomName ? roomName : '404 User Not Found'}</h3>
                         {messages.length === 0 ? "" :
                             (<p>last message at{" "} {
                                 new Date(
@@ -126,4 +128,4 @@ function Chat() {
     )
 }
 
-export default Chat
+export default AddFriend;

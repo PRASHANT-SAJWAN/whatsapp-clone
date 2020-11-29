@@ -33,7 +33,6 @@ function Login() {
                 add(result.user.email, result.user.displayName);
             })
             .catch((error) => alert(error.message));
-
     };
     return (
         <div className="login">
