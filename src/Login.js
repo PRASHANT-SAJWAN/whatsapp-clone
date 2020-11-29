@@ -7,9 +7,15 @@ import { useStateValue } from './StateProvider';
 
 function Login() {
     const [{ }, dispatch] = useStateValue();
-   const add = (email, name) => {
-        db.collection(email).get().then((doc) => {
-            if (!(doc.data.name === name)) {
+    const add = (email, name) => {
+        var flag = false;
+        db.collection(email).where('name', '==', name).get().then(function (docs) {
+            docs.forEach(doc => {
+                if (doc.data().name === name) {
+                    flag = true;
+                }
+            });
+            if (!flag) {
                 db.collection(email).add({
                     name: name,
                 });
@@ -24,7 +30,7 @@ function Login() {
                     type: actionTypes.SET_USER,
                     user: result.user,
                 });
-                // add(result.user.email, result.user.displayName);
+                add(result.user.email, result.user.displayName);
             })
             .catch((error) => alert(error.message));
 
