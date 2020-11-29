@@ -7,11 +7,9 @@ import { useStateValue } from './StateProvider';
 
 function Login() {
     const [{ }, dispatch] = useStateValue();
-
-    // fix later adding user even if it exists
-    const add = (email, name) => {
+   const add = (email, name) => {
         db.collection(email).get().then((doc) => {
-            if (!(doc.name === name)) {
+            if (!(doc.data.name === name)) {
                 db.collection(email).add({
                     name: name,
                 });
