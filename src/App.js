@@ -8,12 +8,12 @@ import { useStateValue } from "./StateProvider";
 
 function App() {
   const [{ user }, dispatch] = useStateValue();
-  
+
   return (
     <div className="app">
-      {!user? (
-          <Login />
-        ) : (
+      {!user ? (
+        <Login />
+      ) : (
         <div className="app__body">
           <Router>
             <Sidebar />
@@ -24,7 +24,7 @@ function App() {
               <Route path="/">
                 <Chat />
               </Route>
-            </Switch> 
+            </Switch>
           </Router>
         </div>
       )}
