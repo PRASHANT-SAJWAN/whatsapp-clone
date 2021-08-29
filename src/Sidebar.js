@@ -11,33 +11,33 @@ import { useStateValue } from './StateProvider';
 
 function Sidebar() {
     const [rooms, setRooms] = useState([]);
-    // const [friends, setFriends] = useState([]);
     const [{ user }, dispatch] = useStateValue();
 
     useEffect(() => {
-        const unsubscribe = db.collection('rooms').onSnapshot(snapshot=> (
-            setRooms (snapshot.docs.map(doc=> ({
+        const unsubscribe = db.collection('rooms').onSnapshot(snapshot => (
+            setRooms(snapshot.docs.map(doc => ({
                 id: doc.id,
                 data: doc.data(),
             })))
         ));
-        return ()=> {
+        return () => {
             unsubscribe();
         }
     }, []);
+
     return (
         <div className="sidebar">
             <div className="sidebar__header">
-                <Avatar src={user?.photoURL}/>
+                <Avatar src={user?.photoURL} />
                 <div className="sidebar__header__right">
-                    <IconButton> 
-                        <MessageIcon /> 
+                    <IconButton>
+                        <MessageIcon />
                     </IconButton>
-                    <IconButton> 
-                        <DonutLargeIcon /> 
+                    <IconButton>
+                        <DonutLargeIcon />
                     </IconButton>
-                    <IconButton> 
-                        <MoreVertIcon /> 
+                    <IconButton>
+                        <MoreVertIcon />
                     </IconButton>
                 </div>
             </div>
@@ -45,18 +45,18 @@ function Sidebar() {
             <div className="sidebar__search">
                 <div className="sidebar__searchContainer">
                     <SearchSharpIcon />
-                    <input  placeholder="seach or start a new chat"/>
+                    <input placeholder="seach or start a new chat" />
                 </div>
             </div>
-            
+
             <div className="sidebar__chats">
-                <SidebarChat addNewChat/>
-                {rooms.map((room)=> (
-                    <SidebarChat key={room.id} id={room.id} name={room.data.name}/> 
+                <SidebarChat addNewChat />
+                {rooms.map((room) => (
+                    <SidebarChat key={room.id} id={room.id} name={room.data.name} />
                 ))}
             </div>
         </div>
     )
 }
 
-export default Sidebar
+export default Sidebar;

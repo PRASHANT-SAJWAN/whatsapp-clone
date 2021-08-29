@@ -7,12 +7,12 @@ import DeleteGroup from './DeleteGroup';
 
 function SidebarChat({ id, name, addNewChat }) {
     const [messages, setMessages] = useState("");
-    const [seed, setSeed] = useState();
+    const [seed, setSeed] = useState(0);
 
     useEffect(() => {
         if (id) {
             db.collection('rooms').doc(id).collection('messages').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
-                setMessages(snapshot.docs.map((doc) => doc.data()))
+                setMessages(snapshot.docs.map((doc) => doc.data()));
             });
             db.collection('rooms').doc(id).get().then(snapshot => {
                 setSeed(snapshot.data().seed);
@@ -47,10 +47,10 @@ function SidebarChat({ id, name, addNewChat }) {
             </div>
         </Link>
     ) : (
-            <div onClick={createChat} className="sidebarChat">
-                <h2>Add New Public Group</h2>
-            </div>
-        );
+        <div onClick={createChat} className="sidebarChat">
+            <h2> Add New Public Group </h2>
+        </div>
+    );
 }
 
 
